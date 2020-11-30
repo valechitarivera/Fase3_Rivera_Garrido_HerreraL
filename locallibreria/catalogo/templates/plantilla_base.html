@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  {% block title %}<title>Administrador MyHWFactory</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <script src="{ %static 'js/metodos_ventana_compra.js' %}"></script>
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/estilosadmin.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bienvenida.css' %}">
+
+  <script></script>
+</head>
+
+<body>
+  <div class="row container-fluid">
+    <div class="col-12">
+      {% block sidebar %}
+      <div class=" fixed-top container-fluid divnavligth" id="divnav">
+                   
+        <nav  class="col-12 navbar navbar-expand-md " >
+          <a class="navbar-brand fontnav"><img src="{% static 'img/gatico.png' %}" alt="Logo" style="width: 30px;"></a>
+          <a  class="navbar-brand fontnav " href="#">My HW Factory</a>
+          {% if user.is_authenticated  %}
+          {% if perms.catalogo.view_producto%}
+          <label style="font-weight: 1;font-size:xx-small;">Cliente</label>
+          
+          {% elif perms.catalogo.add_producto%}
+          <label style="font-weight: 1;font-size:xx-small;">Admin</label>
+          
+          {% endif %}
+          {% endif%}
+          <div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span class="navbar-toggler-icon"><i class="fas fa-bars fa-lg fontnav" style="margin-top: 5px;" ></i></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+              {% if user.is_authenticated  %}
+                {%if perms.catalogo.add_producto%}
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="color: white" data-toggle="dropdown" href="#">Ingresos</a>
+                    <div class="dropdown-menu" style="background:rgb(0, 110, 255);">
+                      <a class="nav-link fontnav" href="{% url 'producto' %}" target=blank_>Produtos</a>
+                      <a class="nav-link fontnav" href="{% url 'marca' %}" >Marcas</a>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link fontnav" href="{% url 'index' %}">Inicio</a>
+                  </li>
+                  
+                  
+                {%elif perms.catalogo.view_producto%}
+
+                
+              
+                <li class="nav-item">
+                  <a class="nav-link fontnav" href="{% url 'index' %}" >Inicio</a>
+                </li>   
+                <li class="nav-item">
+                  <a class="nav-link fontnav" href="{% url 'producto' %}" >Productos</a>
+                </li>   
+              
+              
+                {% endif %}
+                {%else%}
+                <li class="nav-item">
+                  <a class="nav-link fontnav" href="{% url 'index' %}" >Inicio</a>
+                </li>   
+                <li class="nav-item">
+                  <a class="nav-link fontnav" href="{% url 'producto' %}" >Productos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link fontnav" href="{% url 'login' %}" >LogIn</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link fontnav" href="{% url 'registro' %}" >Registrarse</a>
+                </li>            
+              {%endif%}
+              
+
+              {% if user.is_authenticated  %}
+              <li class="nav-item">
+                <a class="nav-link fontnav" href="{% url 'logout' %}" >LogOut</a>
+              </li>   
+              
+              
+              
+              <li class="nav-item">
+                <a class="nav-link fontnav" href="{% url 'logout' %}" >Perfil: {{user.username}}</a>
+              </li>   
+            </ul>
+            <label type="button" class="btnligthmode nav-item" id="btndarkmode"  >
+              <i class="fas fa-adjust btniconcolor"></i>                      
+            </label>
+            {% endif %}
+          </div>
+        </nav>
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+  
+  <div class="row container-fluid">
+    <div class="col-12 ">
+      {% block content %}
+  
+      {% endblock %}
+    </div>
+  </div >
+
+</body>
+<footer class="footer"style="text-align: center; display:block ;margin-top: 60px;" >
+  <div class="container-fluid col-12" style="display: inline-flex ;text-align: center;">
+    <div class=" col-4"style="float:left" >
+      <div class="row col-12"  style="text-align: center" >
+        <i class="far fa-credit-card fa-6x container-fluid" style="color: rgb(0, 110, 255);"></i>
+      </div>
+      <div class="row col-12">
+        <p class="container-fluid">Nos adaptamos a ti para que pagues en el método que mas te acomode &#x1F609;
+         </p>
+      </div>
+    </div>
+    <div class=" col-4"style="float-left" >
+      <div class="row col-12 " style="text-align: center;" >
+        <i class="fas fa-truck fa-6x  container-fluid" style="color: rgb(0, 110, 255);"></i>
+      </div>
+      <div class="row col-12">
+        <p class="container-fluid">Queremos cuidarte por eso te protegemos realizando envíos a tu hogar y sin ningún costo adicional &#128522; </p>
+      </div>
+    </div>
+    <div class="col-4"style="float-left;text-align: center;" >
+      <div class="row col-12" style="text-align: center" >
+        <i  class="fas fa-shield-alt fa-6x container-fluid" style="color: rgb(0, 110, 255);"></i>
+      </div>
+      <div class="row col-12">
+        <p class="container-fluid">Para mejorar tu experiencia con nosotros hemos implementado seguridad total en tus compras :) &#128077;
+        </p>
+      </div>
+    </div>
+  </div>
+
+    <div class="row col-12" style="display: inline; text-align: center;">
+   
+    <a stlye="margin 100px;float:left;margin: 100px;padding:15px"data-toggle="modal" data-target="#ModalQuienes"  class="col-4">Quienes somos</a> 
+    
+    
+    <div class="modal" id="ModalQuienes">
+      <div class="modal-dialog">
+        <div class="modal-content" >
+        
+          <!-- Modal Header -->
+          <div id="headermodal" class="modal-header modalheaderligth" >
+            <h4 class="modal-title">Quienes somos</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div id="bodymodal" class="modal-body modalbodyligth">
+            <div class="container container-fluid">
+            
+                
+              <p>Somos tres compañeros de clase que decidimos emprender, dando innovación al mercado actual de hardware</p>
+              
+            </div>
+          </div>
+          
+          <!-- Modal footer -->
+          <div id="footermodal" class="modal-footer modalfooterligth">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+          </div>
+          
+        </div>
+      </div></div>
+      <a stlye="margin 100px;float:left;margin: 100px;padding:15px"data-toggle="modal" data-target="#ModalEnvios"  class="col-4">Envios</a> 
+
+      <!---->
+
+      <div class="modal" id="ModalEnvios">
+        <div class="modal-dialog">
+          <div class="modal-content" >
+          
+            <!-- Modal Header -->
+            <div id="headermodal" class="modal-header modalheaderligth" >
+              <h4 class="modal-title">Envios</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div id="bodymodal" class="modal-body modalbodyligth">
+              <div class="container container-fluid">
+              
+                  
+                <p>Contamos con nuestro propio transporte para envíarte tus productos, pero solo es válido en Santiago, si eres de otra región usaremos otro método de envío, pero el costo siempre será gratis :)</p>
+                
+              </div>
+            </div>
+            
+            <!-- Modal footer -->
+            <div id="footermodal" class="modal-footer modalfooterligth">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+            
+          </div>
+        </div></div>
+        <!---->
+      
+      
+      <a stlye="margin 100px;float:left;margin: 100px;"data-toggle="modal" data-target="#ModalMas"  class="col-4">Mas...</a> 
+
+      <!---->
+
+      <div class="modal" id="ModalMas">
+        <div class="modal-dialog">
+          <div class="modal-content" >
+          
+            <!-- Modal Header -->
+            <div id="headermodal" class="modal-header modalheaderligth" >
+              <h4 class="modal-title">Mas...</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div id="bodymodal" class="modal-body modalbodyligth">
+              <div class="container container-fluid">
+              
+                  
+                <p>Vendemos al detalle productos que son traidos desde fuera de Chile, los diseños son de nuestra propiedad intelectual, más no el contenido utilizado. Las imágenes utilizadas en nuestro diseño no nos pertenecen. Si haz quedado inconforme respecto a un producto, no nos hacemos responsables, ya que existe comunicación previa y confirmaciones anticipadas de tu parte, por lo que se da entender que estuviste de acuerdo en todo momento, a menos que hayan pruebas contudentes de que esto no fue así.
+                  Trabajamos con hardware de todo tipo, sea gamer o no. No se plotearán productos que pueda verse afectado su funcionamiento. La calidad de imprensión dependerá de la imágen escogida. No trabajamos con imágenes de carácter sexual.
+                </p>
+                
+              </div>
+            </div>
+            
+            <!-- Modal footer -->
+            <div id="footermodal" class="modal-footer modalfooterligth">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+            
+          </div>
+        </div></div>
+        
+      
+        <div class="icon-bar">
+          <a  href="https://www.facebook.com/"target="_blank"class="facebook"><i class="fab fa-facebook" ></i></a> 
+          <a   href="https://twitter.com/"target="_blank"class="twitter"><i class="fab fa-twitter-square"></i></a> 
+          <a  href="https://www.google.com/" target="_blank"class="google"><i class="fab fa-google" ></i></a> 
+          <a  href="https://www.instagram.com/" target="_blank"class="instagram"><i class="fab fa-instagram"></i></a>
+          <a  href="https://www.youtube.com/"target="_blank"class="youtube"><i class="fab fa-youtube" ></i></a> 
+        </div>
+    </div>
+    <p>&copy; Todos los derechos reservados. 2020 </p>
+   
+</footer>
+</html>

@@ -1,0 +1,29 @@
+{% extends "plantilla_base.html" %}
+{% load static%}
+{% block content %}
+{% load crispy_forms_tags%}
+<link href="{% static 'css/styleslog.css' %}" rel="stylesheet">
+
+<div class="masthead container d-flex align-items-center flex-column" style="margin-top: 100px;">
+<div class="login-page">
+ 
+<form method="POST" action="{% url 'index' %}">
+{% csrf_token %}
+
+<div style="display: flex;flex-direction: column;background-color: white;padding: 10px;" >
+   
+  
+     
+      {{form | crispy}}
+
+<div>
+  <input type="submit" value="Registrar" />
+</div>
+</div>
+
+</form>
+  
+</div>
+</div>
+
+{% endblock%}

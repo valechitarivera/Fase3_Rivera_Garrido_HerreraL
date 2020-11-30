@@ -1,0 +1,42 @@
+{% extends "plantilla_base.html" %}
+
+{% block content %}
+    <center>
+        <div class="container-fluid" style="margin-top: 60px;">
+            
+
+                <p>Bievenido a <em>My HW Factory</em>, En Django!</p>
+
+            
+            {% if marca %}
+            <h2>Detalles Maarca: {{marca.marca}}</h2>
+        <table class="table table-bordered">
+            <thead style="background-color:rgb(0, 110, 255);color: white;">
+              <tr>
+                <th scope="col"># Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Disponibilidad</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              
+              
+              <tr>
+                <th scope="row"><a href="{{ marca.get_absolute_url }}">{{ marca.id}}</a></th>
+                <td><a href="{{ marca.get_absolute_url }}">{{ marca.marca}}</a></td>
+                <td><a href="{{ marca.get_absolute_url }}">{{ marca.disponible}}</a></td>
+
+
+              </tr>
+              
+              
+               
+            </tbody>
+          </table>
+            {% endif %}
+            <a class="btn btn-secondary" href="{% url 'marca_update' pk=marca.pk %}">Editar<span class="glyphicon glyphicon-pencil"></span></a>
+            <a class="btn btn-danger" href="{% url 'marca_delete' pk=marca.pk %}">Eliminar<span class="glyphicon glyphicon-trash"></span></a>
+        </div>
+    </center>
+{% endblock %}

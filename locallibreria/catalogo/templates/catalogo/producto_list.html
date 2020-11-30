@@ -1,0 +1,138 @@
+{% extends "plantilla_base.html" %}
+{% load static%}
+{% block content %}
+    <center>
+        <div class="col-12" style="margin-top: 60px;">
+          {% if user.is_authenticated  %}
+          <p>Bievenido a <em>My HW Factory</em>, En Django!</p>
+          
+            {% if perms.catalogo.add_producto%} 
+            <h1 class="col-12">Gestion Productos</h1>
+
+                
+            
+                <button class="btn btn-primary"><a href="{% url 'producto_create'%}" style="text-decoration: none;color: white;">Agregar Productos</a> </button>
+                
+            
+            {% if producto_list %}
+           
+            <h2>Productos Registrados</h2>
+              
+              <table class="table table-bordered">
+                <thead style="background-color:rgb(0, 110, 255);color: white;">
+                  <tr>
+                    <th scope="col"># Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Precio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for producto in producto_list%}
+                  
+                  <tr style="background-color: white;">
+                    <th scope="row"><a href="{{ producto.get_absolute_url }}">{{ producto.id}}</a></th>
+                    <td><a href="{{ producto.get_absolute_url }}">{{ producto.nombre}}</a></td>
+                    <td><a href="{{ producto.get_absolute_url }}">{{ producto.marca}}</a></td>
+                    <td><a href="{{ producto.get_absolute_url }}">{{ producto.modelo}}</a></td>
+                    <td><a href="{{ producto.get_absolute_url }}">${{ producto.precio}}</a></td>
+                  </tr>
+                  {% endfor %}
+                  
+                   
+                </tbody>
+              </table>
+              {%endif%}
+              
+              {% elif perms.catalogo.view_producto%}
+             
+              <div class="row container-fluid">
+                <h2  >Productos en venta</h2>
+    
+              </div>
+              <section class="productos-list" >
+    
+              {% if producto_list %}
+                {% for producto in producto_list%}
+                  <div class="productos-items row-12  col-12 col-sm-12 col-md-8 col-lg-6 col-xl-4 ;" style="padding: 20px;">
+                    <div class="card">
+                      {% if producto.img1 %}
+                      <img class="card-img-top" style="padding: 5px;" src="{{ producto.img1.url}}" >
+                      {% endif%}
+                      <div class="card-body">
+                        <h5 class="card-title text-uppercase">{{ producto.nombre}}</h5>
+                        <h5 class="card-title text-uppercase">${{ producto.precio}}</h5>
+                        <a href="{% url 'producto-detail' producto.pk %}"
+                                class="btn btn-primary" style="float:none;">
+                                  Ver más
+                              </a>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </section>
+            <aside>
+              <div class=" filtros " > <!-- category-list-->
+          
+                <a href="#" class="itemFiltro " category="all"> Todos</a><!--id products-items -->
+                <a href="#" class="itemFiltro" category="gabinetes">Gabinetes</a>
+                <a href="#" class="itemFiltro " category="graficas">Graficas</a>
+                <a href="#" class="itemFiltro " category="monitores">Monitores</a>
+                <a href="#" class="itemFiltro " category="audifonos">Audifonos</a>
+                <a href="#" class="itemFiltro " category="teclados">Teclados</a>
+                <a href="#" class="itemFiltro " category="ratones">Ratones</a>
+                <a href="#" class="itemFiltro " category="ram">RAM</a>            
+              </div>
+              </aside>
+        
+        
+            {% endif %}      
+            
+          </div>
+          {%else%}
+          
+          <div class="row container-fluid">
+            <h2  >Productos en venta</h2>
+
+          </div>
+          <section class="productos-list" >
+
+          {% if producto_list %}
+            {% for producto in producto_list%}
+              <div class="productos-items row-12  col-12 col-sm-12 col-md-8 col-lg-6 col-xl-4 ;" style="padding: 20px;">
+                <div class="card">
+                  {% if producto.img1 %}
+                  <img class="card-img-top" style="padding: 5px;" src="{{ producto.img1.url}}" >
+                  {% endif%}
+                  <div class="card-body">
+                    <h5 class="card-title text-uppercase">{{ producto.nombre}}</h5>
+                    <h5 class="card-title text-uppercase">${{ producto.precio}}</h5>
+                    <a href="{% url 'producto-detail' producto.pk %}"
+                            class="btn btn-primary" style="float:none;">
+                              Ver más
+                          </a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </section>
+        <aside>
+          <div class=" filtros " > <!-- category-list-->
+      
+            <a href="#" class="itemFiltro " category="all"> Todos</a><!--id products-items -->
+            <a href="#" class="itemFiltro" category="gabinetes">Gabinetes</a>
+            <a href="#" class="itemFiltro " category="graficas">Graficas</a>
+            <a href="#" class="itemFiltro " category="monitores">Monitores</a>
+            <a href="#" class="itemFiltro " category="audifonos">Audifonos</a>
+            <a href="#" class="itemFiltro " category="teclados">Teclados</a>
+            <a href="#" class="itemFiltro " category="ratones">Ratones</a>
+            <a href="#" class="itemFiltro " category="ram">RAM</a>            
+          </div>
+          </aside>
+          {% endif %}
+        </div>
+    </center>
+{% endblock %}
